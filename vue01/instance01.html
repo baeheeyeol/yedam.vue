@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <script>
+    // MVVM 모델 : view - viewModel - model -> viewModel : vue instance
+    /* 
+      new Vue({})
+        el : 'HTML 요소',
+        -> 사용하는 모든 데이터에 정의
+        data : '데이터에 대한 정보' -> 읽고 쓰고 수정
+        computed : 'data를 이용하여 연산을 일으킨 정보' -> 읽기 전용
+        methods : '데이터 처리'
+        watch : '데이터를 감시'
+    */
+   
+  </script>
+  <div id="app">
+    <!--  템플릿 문법 : {{ }} -->
+    <p>{{myText + ( 1 * 2)}}</p>
+    <!--  디렉티브 : 해당 요소에 대해 vue가 실행할 명령어 ( v- ) -->
+    <p v-text="myText"></p>
+    <p v-html="myHtml"></p>
+  </div>
+  <script>
+    let app = new Vue({
+     el : '#app',
+     data : {
+      //프로퍼티
+      myText : 'Hello!',
+      myHtml :'<h1>Hello!</h1>'
+     }
+    })
+  </script>
+  <div id="app2">
+    <p>{{myNumber *12345}}</p>
+    <p>{{myText + '를 배워보도록 합시다.'}}</p>
+    <p>{{myBoolean}}</p>
+    <p>{{myArray}}</p>
+    <p>{{myArray[2]}}</p>
+    <p>{{myObject}}</p>
+    <p>{{myObject.name}} : {{myObject.price}}</p>
+    <p>{{$data}}</p>
+    <p>{{$data.myArray[1]}}</p>
+  </div>
+  <script>
+    let app2 = new Vue({
+      el : '#app2',
+      data : {
+        myNumber : 12345,
+        myText : 'vue.js',
+        myBoolean : true,
+        myArray : ['다즐링','얼그레이','실론'],
+        myObject : {
+          name : '홍차',
+          price : 600
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>

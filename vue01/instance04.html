@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <idv id="app">
+    <h1>입력폼 활용</h1>
+    <label>이름 :  <input placeholder="홍길동" v-model.lazy="myName"></label>
+    <p>좋아하는 색은 : </p>
+    <div>
+      <label><input type="radio" value="red" v-model="myColor">빨강</label><br>
+      <label><input type="radio" value="green" v-model="myColor">녹색</label><br>
+      <label><input type="radio" value="blue" v-model="myColor">파랑색</label><br>
+      <label><input type="radio" value="yellow" v-model="myColor">노란색</label><br>
+      <label><input type="radio" value="gray" v-model="myColor">회색</label><br>
+    </div>
+    <button @click ="click" @mouseover="over" @mouseout="out">click</button>
+    <!-- 출력 예시 : 내 이름은 홍길동 이고 좋아하는 색은 blue입니다. -->
+    <!-- 단, 이름은 입력이 끝난 후 포커스가 이동되었을 때 반영하도록 할 것 -->
+    <!-- 해당 <p> 태그에 선택된 색깔로 배경색을 지정 -->
+    <p :style="{'background-color' : myColor}" >내 이름은 {{myName}} 이고 좋아하는 색은 {{myColor}}입니다</p>
+  </idv>
+  <script>
+    let app =new Vue({
+      el : '#app',
+      data :{
+        myName:'',
+        myColor:'',
+      },
+      methods:{
+        click:function(){
+          this.myName='가나다'
+        },
+        over:function(){
+          this.myColor ='red'
+        },
+        out:function(){
+          this.myColor='yellow'
+        },
+
+      }
+    })
+  </script>
+</body>
+
+</html>

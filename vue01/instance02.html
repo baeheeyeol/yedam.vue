@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+  <style>
+    .active {
+      color: red;
+    }
+
+    .strike-through {
+      text-decoration: line-through;
+      color: lightgray;
+    }
+
+    .dark {
+      background-color: gray;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- v-bind : 속성과 바인딩  -->
+    <img src="clover.PNG" style="width:20%"> 직접 지정
+    <img v-bind:src="fileName" v-bind:style="styleObject">v-bind로 지정
+    <a href="http://www.naver.com">링크를 직접 지정</a>
+    <br>
+    <a :href="myURL">링크를 v-bind로 지정</a>
+    <br>
+    <a href="#">링크를 v-bind로 지정 주소 - {{ myURL}}</a>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        fileName: "clover.PNG",
+        styleObject: {
+          width: '30%',
+          border: '1px solid red',
+        },
+        myURL: "http://www.naver.com"
+      }
+    })
+
+    $('img:first').css('width', '50%');
+  </script>
+  <hr>
+  <div id="app2">
+    <!-- v-bind:style="프로퍼티명" -->
+    <!-- v-bind:style="{ color : 프로퍼티명}" -->
+    <!-- 두번째 방식 : background-color => backgroundColor -->
+    <p style="color : red">문자색 직접 지정</p>
+    <p :style="{ color : myColor }">문자색 v-bind로 지정</p>
+    <p style="font-size : 200%">글자 크기 직접 지정</p>
+    <p :style="{ fontSize : mySize }">글자 크기 v-bind 지정</p>
+    <p style="background-color : aqua">배경색 직접 지정</p>
+    <p :style="{ 'background-color' : myBackColor, fontSize : mySize }">배경색 v-bind 지정</p>
+  </div>
+  <script>
+    let app2 = new Vue({
+      el: '#app2',
+      data: {
+        myColor: 'red',
+        mySize: '300%',
+        myBackColor: 'aqua',
+      }
+    })
+    document.querySelector('#app img:eq(1)').src= 'file';
+  </script>
+  <div id="app3">
+    <p class="strike-through">직접 클래스 지정</p>
+    <p :class="myClass">v-bind로 단일 클래스 지정</p>
+    <p :class="[myClass, darkClass]">v-bind로 복수 클래스 지정</p>
+    <p class="dark" :class="{'strike-through' : isOn}">데이터로 클래스 ON/OFF</p>
+    <button @click="turn">click</button>
+  </div>
+  <script>
+    let app3 = new Vue({
+      el: '#app3',
+      data: {
+        myClass: "strike-through",
+        darkClass: "dark",
+        isOn : false,
+      },
+      methods :{
+        turn :function(){
+          this.isOn =!this.isOn
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

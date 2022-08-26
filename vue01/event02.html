@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <style>
+    .tag{
+      border :1px solid gray;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <!-- 
+    이벤트 수식어 -> on 디렉티브에 연결하는 이벤트 동작을 제어
+    .stop : 이벤트 버블링(이벤트 전파를) 중단
+    .prevent : 기본 이벤트 핸들러를 중지
+    .capture : 이벤트 캡처링 중단
+    .self : Event 객체의 target == currentTarget 인 경우에만 이벤트 핸들러 동작
+    .once : 최대 한번만 트리거
+   -->
+  <!-- <button id="btn" @click="warn('Form cannot be submitted yet', $event)" :key="item.name">submit</button> -->
+ <!-- $event : 원본 DOM 이벤트 객체 -->
+
+  <script>
+    // new Vue({
+    //   // el: '#btn',
+    //   methods: {
+    //     warn: function (message, event) {
+    //       if (event) {
+    //         console.log(message)
+    //         console.log(event.target)
+    //         console.log(event.currentTarget)
+    //         console.log(event)
+    //         event.preventDefault();
+    //       }
+    //       alert(message);
+    //     }
+    //   },
+    //   watch: {
+    //     message: function (newVal, oldVal) {
+    //       this.reversedMessage = newVal.split('').reverse().join('')
+    //     }
+    //   }
+    // })
+  </script>
+  <div id="app" :class="style">
+    <form action="http://www.naver.com" :class="style" @click="printMessage('form 태그 선택')">
+      form
+      <div :class="style" @click.stop="printMessage('div 태그 선택')">
+        div
+        <p :class="style" @click.self.once="printMessage('p 태그 선택')">
+          p
+          <a :class="style" href="http://www.google.com" @click.prevent="printMessage('a 태그 선택')">
+            구글로 이동
+          </a>
+          {{message}}
+        </p>
+      </div>
+      <button>form</button>
+    </form>
+    <div class="style">
+      <span @click="changeMessage($event), alertExcute()">이벤트 핸들러 복수 실행</span>
+    </div>
+  </div>
+
+  <script>
+    let app = new Vue({
+      el : '#app',
+      data:{ 
+        message:'',
+        style: 'tag',
+      },
+      methods:{
+        printMessage : function(message){
+          this.message = message;
+          alert(this.message);
+        },
+        changeMessage: function(event){
+          console.log(event.target);
+          this.message = '이벤트 실행 target : '  + event.target;
+        },
+        alertExcute : function(){
+          alert('이벤트 핸들러 보수 등록')
+        },
+      }
+    })
+  </script>
+ <div id="app2">
+  <input type="number" v-model.number="price"> 원 <br>
+  <input type="number" v-model.number="count"> 개 <br>
+  <p> 합계 : {{sum }} 원</p>
+  <p> 부가세 포함 금액 : {{ taxIncluded}} 원</p>
+  <hr>
+  <hr>
+  <p>감상은 30자 이내로 입력해주세요.</p>
+  <textarea v-model="myText" maxlength="30"></textarea>
+  <p :style="{color:computedColor}">남은 글자는 {{remaining}} 입니다.</p>
+  <p v-text="printDate()"></p>
+  <button @click="getDate">날짜</button>
+ </div>
+ <script>
+  let app2 =new Vue({
+    el : '#app2',
+    data :{
+      price:0,
+      count:0,
+      myText:'',
+
+    },
+    //산출 프로퍼티 : 기본 프로퍼티를 이용하여 연산을 한 값 (읽기 전용)
+    //기본 프로퍼티에 의존적인 성향 -> 기본 프로퍼티의 변화에만 반응해서 연산
+    computed :
+    {
+      sum :function(){
+        // 매개변수가 존재하지 않고 반드시 return 구문이 필요
+        return this.price*this.count 
+      },
+      taxIncluded :function(){
+        return Math.ceil(this.sum*1.1)
+        // return new Date().getDate();
+      },
+      remaining :function(){
+        return 30 - this.myText.length;
+      },
+      computedColor:function(){
+        let col ='green';
+        if(this.remaining <20){
+          col ='orange'
+        }
+        if(this.remaining <1){
+          col='red'
+        }
+        return col;
+      }
+    },
+    methods :{
+      printDate : function(){
+        return '오늘 날짜 : ' + Date(); 
+      },
+      getDate : function(){
+        alert(this.printDate());
+      }
+    }
+
+    }
+  )
+ </script>
+ <div id="app3">  
+    <!-- 사용자 입력하는 문장 주에 금지문자가 있을 경우 -->
+    <p>금지문자[{{forhiddenText}}]</p>
+    <textarea v-model="inputText"></textarea>
+    <br>
+    <br>
+    <!-- START 버튼을 누르면 정해진 시간이 실시간으로 줄어드는 경우 -->
+    <p>앞으로 {{rectSec}}</p>
+    <button @click="startTimer">START</button>
+  </div> 
+ <script>
+  let app3 =new Vue({
+    el : '#app3',
+    data : {
+      forhiddenText:'커피',
+      inputText :'오늘은 날씨가 좋습니다.',
+      rectSec:'',
+      timerObj :null,
+    },
+    // watch : 기본 프로퍼티와 산출 프로퍼티를 감시
+    watch : {
+      // 매개변수 존재하지 않으며 retrun 구문도 존재하지 않음
+      inputText : function(){
+        let pos = this.inputText.indexOf(this.forhiddenText);
+        // indexOf : 해당 문자가 포함되지 않으면 -1, 아니면 해당위치를 반환
+        if(pos>=0){
+          alert(this.forhiddenText + '는 입력할 수 없습니다.');
+          this.inputText = this.inputText.substr(0,pos)
+          //substr(start,length) : start 인덱스 부터 length 길이만큼만 리턴
+        }
+        console.log(pos)
+        // if(this.inputText.match(this.forhiddenText)){
+        //   this.inputText=''
+        //   return false
+        // }
+      },
+      rectSec : function(){
+        if(this.rectSec <=0){
+          alert('제한시간입니다.');
+          clearInterval(this.timerObj);
+        }
+      }
+    },
+    methods : {
+      startTimer : function(){
+        clearInterval(this.timerObj);
+        this.rectSec= 5;
+        this.timerObj= setInterval(() => {this.rectSec--
+        }, 1000);
+      }
+    }
+  })
+ </script>
+</body>
+
+</html>
+let app = new Vue({
+  el: '#app',
+  data:{
+    isWritable : true,
+    limitTime :0,
+    setTime :0,
+    resultScore: 0,
+    wordCnt:0,
+    inputText:'',
+    forhiddenText:'',
+  },
+  methods : {
+    start : function(){
+      console.log(1)
+      this.isWritable = !this.isWritable
+      this.limitTime = this.setTime
+      
+    }
+  },
+  watch :{
+    inputText : function(){
+    let pos = this.inputText.indexOf(this.forhiddenText)
+    if(pos>=0){
+      alert('금지어입력')
+      this.inputText =this.inputText.substr(0,pos)
+      wordCnt =+ 12;
+    }
+  }}
+})

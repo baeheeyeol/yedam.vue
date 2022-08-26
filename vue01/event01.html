@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body @mouseover="show">
+  <div id="app">
+    <p>{{count}}</p>
+    <button @click="countUp">countUp</button>
+    <button @click="oneClick" :disabled="isClick">One click</button>
+    <button @click="countDown">countDown</button>
+    <hr>
+    <label>증가 숫자 : <input type="number" v-model.number="num"></label>
+    <br>
+    <button @click="countUpByInput(num)">{{num}} 씩 증가</button>
+    <br>
+    <input @keyup.enter="show" v-model.lazy="myText">
+    <input @mouseover="show" v-model.lazy="myText">
+  </div>
+  <script>
+    let app=new Vue({
+      el:'#app',
+      data:{
+        count:0,
+        isClick:false,
+        num:0,
+        myText:'',
+      },
+      methods:{
+        countUp:function(){
+          this.count++;
+        },
+        countDown:function(){
+          this.count--;
+        },
+        oneClick :function(){
+          this.isClick =true;
+          printMessage();
+          this.countDown();
+        },
+        countUpByInput : function(num){
+          this.count += num
+          this.num=''
+        },
+        show:function(){
+          alert(this.myText)
+        }
+      },
+    })
+    function printMessage(){
+      alert('한번만 클릭이 가능합니다.')
+    }
+  </script>
+</body>
+
+</html>
