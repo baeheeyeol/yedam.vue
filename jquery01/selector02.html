@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <script>
+    // 모든 자원의 로딩을 기다리기 때문에 딜레이가 걸릴 수 있음
+    window.onload =function(){} 
+    document.addEventListener('DOMContentLoaded', function () {
+      let tag = document.getElementById('title');
+      tag.innerHTML = "테스트";
+    });
+
+    $(document).ready(function () {
+      // 제이쿼리 선택자 = css 선택자 : #, ., 태그명 , # > 태그명
+      // 1. 직접 선택자 2. 관계 선택자
+      // 전체 선택자 *
+      $('*').css('border','1px solid blue');
+
+      // 아이디 선택자 #
+      $('#title').css('background-color','gray').css('border','2px solid black');
+
+      // 클래스 선택자 . => 복수의 값
+      $('.blue').text('중복');
+
+      let classTags = $('.blue');
+      for(let i=0;i<classTags.length; i++){
+        classTags[i].textContent += i;
+      }
+
+      // 태그 선택자
+      $('h3').text('직접 선택자로 다시 변경');
+
+      // 그룹 선택자
+      //$('#title, .blue, h4').css('color','yellow');
+
+      // 종속 선택자 : 선택한 요소의 id 혹은 class 값이 일치하는 경우
+      // 선택자 내부에 공백이 없도록 작성
+      $('h1.blue').text('종속 선택자로 선택');
+      $('h2#title').text("가나다");
+
+    })
+  </script>
+  <h1 class="blue">제이쿼리</h1>
+  <h2 id="title">선택자</h2>
+  <h3 class="blue">직접 선택자</h3>
+  <h4>그룹 선택자</h4>
+</body>
+
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="ex01">
+    <h1>매열메서드</h1>
+    <ul id="menu1">
+      <li>내용1-1</li>
+      <li>내용1-2</li>
+      <li>내용1-3</li>
+    </ul>
+    <ul id="menu1">
+      <li>내용2-1</li>
+      <li>내용2-2</li>
+      <li>내용2-3</li>
+    </ul>
+  </div>
+  <script>
+    let obj = [{
+        "area": "서울"
+      },
+      {
+        "area": "부산"
+      },
+      {
+        "area": "전주"
+      }
+    ];
+
+    // each() -> 배열 안의 모든 값을 탐색
+    let ulTag = $('<ul />');
+    $(obj).each(function (index, object) {
+      console.log(index + " : ", object);
+      let liTag = $('<li />').text(object.area);
+      ulTag.append(liTag);
+    });
+    $('#ex01').append(ulTag);
+
+    console.log("======================================")
+    $.each(obj, function (idx, obj) {
+      console.log(idx + " : ", obj)
+      let tag = $('<li>' + obj.area + '</li>'); // '<li>서울</li>' -> 제이쿼리 매개변수
+      console.log(tag);
+    });
+
+    console.log("======================================")
+    $('#menu1 li').each(function (index, object) {
+      console.log(index + " : ", object.textContent);
+      console.log(index + " : " + $(object).text());
+    });
+
+    console.log("======================================")
+    $.each($('#ex01 li'), function (idx) {
+      console.log($(this).text());
+
+    })
+  </script>
+  <div id="ex02">
+    <!-- 근무지역 : 서울 -->
+    <ul></ul>
+    <!-- 부서 : 영업 -->
+    <ul></ul>
+    <!-- 부서 : 생상 -->
+    <ul></ul>
+  </div>
+  <script>
+    let arr1 = [{
+        "area": "서울",
+        "dept": "영업",
+        "name": "무대리"
+      },
+      {
+        "area": "부산",
+        "dept": "영업",
+        "name": "홍과장"
+      },
+      {
+        "area": "대전",
+        "dept": "생산",
+        "name": "박사장"
+      },
+      {
+        "area": "서울",
+        "dept": "생산",
+        "name": "김부장"
+      },
+    ];
+
+    let arr7 = $.map(arr1, function (obj, idx) {
+      return obj;
+    })
+
+    // 근무지역 : 서울지역
+    let areaDatas = $.map(arr1, function (obj, idx) {
+      if (obj.area == "서울") return obj;
+    });
+    let ul=$('#ex02 ul:first');
+    appendTag(ul,areaDatas);
+
+    // 부서 : 영업
+    let deptDatas = $.grep(arr1, function (obj, idx) {
+      if (obj.dept == "영업")
+        return true;
+      else
+        return false;
+    })
+    ul = $(ul).next();
+    appendTag(ul,deptDatas);
+    
+    // 부서 : 생산
+    deptDatas = $.map(arr1, function (obj, idx) {
+      if (obj.dept == "생산") return obj;
+    })
+    ul = $(ul).next();
+    appendTag(ul,deptDatas);
+
+    function appendTag(tag, datas) {
+      $(datas).each(function (idx, obj) {
+        $(tag).append(
+          $('<li/>').text("지역:" + obj.area + ", 부서 : " + obj.dept + ", 이름 : " + obj.name));
+      })
+    }
+    // $(arr7).each(function (idx, obj) {
+    //   let li = $('<li>' + "지역 : " + obj.area + ", 부서 : " + obj.dept + ", 이름 : " + obj.name + '</li>');
+
+    //   if(obj.area=="서울"){
+    //     $('#ex02 ul:nth-child(1)').append(li)
+    //   }
+    //   li = $('<li>' + "지역 : " + obj.area + ", 부서 : " + obj.dept + ", 이름 : " + obj.name + '</li>');
+    //   switch(obj.dept){
+    //   case "영업" :
+    //   $('#ex02 ul:nth-child(2)').append(li)
+    //   case "생산" :
+    //   $('#ex02 ul:nth-child(3)').append(li)
+    // }
+    // });
+
+    // let arr4 = $.map(arr1, function (obj, idx) {
+    //   if (obj.area == "서울") return obj;
+    // })
+    // $(arr4).each(function (idx, obj) {
+    //   let li = $('<li>' + "지역 : " + obj.area + ", 부서 : " + obj.dept + ", 이름 : " + obj.name + '</li>');
+    //   console.log(li)
+    //   $('#ex02 ul:nth-child(1)').append(li)
+    // });
+
+    // let arr5 = $.map(arr1, function (obj, idx) {
+    //   if (obj.dept == "영업") return obj;
+    // })
+    // $(arr5).each(function (idx, obj) {
+    //   let li = $('<li>' + "지역 : " + obj.area + ", 부서 : " + obj.dept + ", 이름 : " + obj.name + '</li>');
+    //   console.log(li)
+    //   $('#ex02 ul:nth-child(2)').append(li)
+    // });
+
+    // let arr6 = $.map(arr1, function (obj, idx) {
+    //   if (obj.dept == "생산") return obj;
+    // })
+    // $(arr6).each(function (idx, obj) {
+    //   let li = $('<li>' + "지역 : " + obj.area + ", 부서 : " + obj.dept + ", 이름 : " + obj.name + '</li>');
+    //   console.log(li)
+    //   $('#ex02 ul:nth-child(3)').append(li)
+    // });
+
+    // $.map() -> 특정 조건에 해당하는 값으로 별도의 새 배열 생성
+    //         -> return 구문을 통해서 반환되는 값으로 구성
+
+    let arr2 = $.map(arr1, function (obj, idx) {
+      if (obj.area == "서울") return obj.name;
+    });
+
+    console.log("======================================")
+
+    $(arr2).each(function (idx, obj) {
+      console.log(idx + " : " + obj);
+    })
+
+    // $.grep() -> 특정 조건에 해당하는 값으로 별도의 새 배열 생성 (인덱스를 기준으로 오름차순 정렬)
+
+    let arr3 = $.grep(arr1, function (odj, idx) {
+      if (obj.dept == "영업") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    console.log("======================================")
+
+    $(arr3).each(function (idx, obj) {
+      console.log(idx + " : " + obj);
+    })
+
+   
+  //$.merge() -> 두개의 배열 합치는 매서드
+  let array1 = ["서울", "대전", "부산", "전주"];
+  let array2 = ["한국", "미국", "일본", "중국"];
+
+  $.merge(array2, array1);
+  console.log(array2)
+  $.merge(array2, array1);
+console.log(array2);
+  </script>
+
+</body>
+
+</html>

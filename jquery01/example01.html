@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <form id="info">
+    <div>
+      <label for="user_name">이름</label>
+      <input type="text" name="user_name" id="user_name">
+    </div>
+    <div>
+      <label for="user_dept">소속</label>
+      <select name="user_dept" id="user_dept">
+        <option value="student">학생</option>
+        <option value="teacher">교수</option>
+      </select>
+    </div>
+    <div>
+      <label for="user_hobby">취미</label>
+      <input type="checkbox" name="user_hobby" value="독서">독서
+      <input type="checkbox" name="user_hobby" value="영화">영화
+      <input type="checkbox" name="user_hobby" value="글쓰기">글쓰기
+    </div>
+    <button type="button" name="input" id="input" onclick="javascript:jqEvent1();">등록</button>
+  </form>
+  <div id="show">
+    <table style="border: 1px solid black;">
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>소속</th>
+          <th>취미1</th>
+          <th>취미2</th>
+          <th>취미3</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    function jqEvent1() {
+      let name =$('#user_name').val();
+      let dept =$('#user_dept :selected').text();
+      let hobbies = $('#info > div:last :checked');
+
+      let tr =$('<tr/>')
+      tr.append($('<td/>').text(name));
+      tr.append($('<td/>').text(dept));
+      for(let i=0;i<hobbies.length;i++){
+        let td=($('<td>').text(hobbies[i].value))
+          tr.append(td);
+      }
+      $('tbody').append(tr);
+
+    }
+    function jqEvent() {
+      let name = $('#user_name').val();
+      let dept = $('#user_dept :selected').text();
+      let hobbies = $('#info > div:last :checked'); // 유사배열
+
+      let tr = $('<tr/>')
+      tr.append($('<td/>').text(name));
+      tr.append($('<td/>').text(dept));
+      for (let i = 0; i < hobbies.length; i++) {
+        let td = ($('<td>')).text(hobbies[i].value)
+        tr.append(td);
+      }
+      $('tbody').append(tr)
+    }
+
+    function jqEvent2(){
+      let name = document.getElementById('user_name').value;
+      let select = document.getElementById('user_dept');
+      let dept = select.options[select.selectedIndex].textContent;
+      let hobbies = document.querySelectorAll('input[name="user_hobby"]:checked');
+      
+      let tr =document.createElement('tr');
+      // 이름
+      let td =document.createElement('td');
+      td.textContent =name;
+      tr.appendChild(td);
+
+      //소속
+      td = document.createElement('td');
+      td.textContent =dept;
+      tr.appendChild(td);
+
+      //취미
+      hobbies.forEach(element =>{
+        td = document.createElement('td');
+        td.textContent = element.value;
+        tr.appendChild(td);
+      });
+      document.getElementsByTagName('tbody')[0].appendChild(tr);
+    }
+  </script>
+</body>
+
+</html>

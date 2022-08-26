@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div id="wrap">
+    <p>
+      <a href="https://jquery.com" target="_black">jquery</a>
+    </p>
+    <p>
+      <a href="https://www.naver.com">naver</a>
+    </p>
+    <p>
+      <a href="http://www.daum.net">daum</a>
+    </p>
+    <p>
+      <a href="http://www.google.com">google</a>
+    </p>
+    <form action="#" method="get" id="member_f">
+      <p>
+        <label for="user_id">아이디</label>
+        <input type="text" name="user_id" id="user_id">
+      </p>
+      <p>
+        <label for="user_pw">비밀번호</label>
+        <input type="password" name="user_pw" id="user_pw">
+      </p>
+
+    </form>
+  </div>
+  <script>
+    // 속성 검색[]
+    // a 태그 중 target 속성이 존재하는 요소만
+    $('#wrap a[target]').css('color', '#f00');
+
+    // a 태그 중 target 속성을 가지고 있으면서 '_black' 값을 가지고 있는 요소만
+    $('#wrap a[target="_black"]').css('border', '1px solid black');
+
+    // href 속성의 값이 'https'로 시작되는 요소만
+    $('#wrap a[href^="https"]').css('color', 'green');
+
+    // href 속성의 값이 'net'로 끝나는 요소만
+    $('#wrap a[href$="net"]').css('color', 'orange');
+
+    // href 속성의 값 중 'google'이 위치상관없이 포함되는 요소만
+    $('#wrap a[href*="google"]').css('color', 'pink');
+
+    //input type 속성 값으로 검색
+    $('#member_f :text').css('background-color','gray');
+    $('#member_f :password').val('비밀번호를 입력하세요.');
+ 
+ </script>
+</body>
+
+</html>

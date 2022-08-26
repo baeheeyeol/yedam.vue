@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <!-- <script>
+    $(document).ready(function () {
+      // 관계 선택자
+
+      // 부모 선택자 parent()
+      $('#inner_wrap').parent().css('border', '1px solid black');
+      console.log($('#inner_wrap div').parents());
+
+      // 하위 요소 선택자 
+      $('#wrap h1,h2').css('color', 'blue');
+
+      // 자식 요소 선택자
+      //$('#inner_wrap > h1').text('자식 요소로 선택');
+      $('div > h1').text('동일한 구조에 적용');
+      console.log($('#inner_wrap').children('p'));
+
+    });
+  </script> -->
+  <!-- <div id="wrap">
+    <div id="inner_wrap">
+      <h1>제목1</h1>
+      <h2>제목2</h2>
+      <h3>제목3</h3>
+      <p>내용</p>
+      <div>
+        <h1>하위 요소1</h1>
+        <h2>하위 요소2</h2>
+      </div>
+    </div>
+  </div> -->
+  <!-- <script>
+    $(document).ready(function () {
+      // 형(이전) 요소 선택자
+      // 바로 형(이전)
+      $('.txt').prev().css('background-color', '#0ff').css('border', '2px solid #f00');
+      // 모든 형(이전) 요소
+      $('.txt').prevAll().text('이전 요소들');
+      // 모든 형(이전) 요소 중 범위제한
+      $('.txt').prevUntil('h2').css('border', '10px solid green');
+
+      // 동생(다음) 요소 선택자
+      // 바로 동생(다음)
+      $('.txt').next().next().css('color', 'red');
+      // 모든 동생(다음)
+      $('.txt').nextAll().text('다음 요소들');
+      // 모든 동생(다음) 중 범위 제한
+      $('.txt').nextUntil('span').css('border','10px solid green');
+
+      $('.txt + p').text('선택');
+    });
+  </script>
+  <div id="content">
+    <h2>추가 인접 태그</h2>
+    <h1>이전 관계 선택자</h1>
+    <p>내용1</p>
+    <p class="txt">내용2</p>
+    <p>내용3</p>
+    <p>내용4</p>
+    <span>추가한 내용</span>
+  </div> -->
+  <script>
+    $(function () {
+      // 가장 가까운 상위 요소 선택자 : 주어진 조건에 해당되는 가장 가까운 상위요소
+      $('.txt1').closest('div').css('border','2px solid blue');
+
+      // 상위 요소 선택자
+      $('.txt1').parents('div').css('background-color', 'gray');
+
+      // 전체 형제 요소 선택자
+      $('#ex03 h1').siblings().css('background-color','pink');
+    })
+  </script>
+  <div id="ex03">
+    <h1 class="title">선택자</h1>
+    <section>
+      <div>
+        <p class="txt1">내용</p>
+      </div>
+    </section>
+    <section>
+      <div>
+        <p class="txt2">내용</p>
+      </div>
+    </section>
+  </div>
+
+</body>
+
+</html>

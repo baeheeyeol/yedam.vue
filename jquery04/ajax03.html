@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <div>
+    <label for="empId">사원번호</label>
+    <input type="number" id="empId" name="employee_id">
+    <button id="selectBtn" type="button">조회</button>
+  </div>
+  <form id="info" onsubmit="return false">
+    <div>
+      <button id="updateBtn" type="button">수정</button>
+      <button id="deleteBtn" type="button">삭제</button>
+    </div>
+    <div>
+      <label for="id">사원번호</label>
+      <input type="number" id="employee_id" name="employee_id">
+    </div>
+    <div>
+      <label for="last_name">성</label>
+      <input type="text" id="last_name" name="last_name">
+    </div>
+    <div>
+      <label for="first_name">이름</label>
+      <input type="text" id="first_name" name="first_name">
+    </div>
+    <div>
+      <label for="email">이메일</label>
+      <input type="email" id="email" name="email">
+    </div>
+    <div>
+      <label for="job_id">직업</label>
+      <input type="text" id="job_id" name="job_id">
+    </div>
+    <div>
+      <label for="phone_number">연락처</label>
+      <input type="text" id="phone_number" name="phone_number">
+    </div>
+  </form>
+  <script>
+    // 단건조회
+    // 주소 : http://192.168.0.29/myserver/empFind
+    // 통신 : get
+    // date : 사원번호
+    $('#selectBtn').click(function(){
+      $.ajax({
+        url : 'http://192.168.0.83:8088/myserver/empFind',
+        type : 'get', //url?asd=asd&
+        data : { employee_id : $('#empId').val()},
+        // contentType : 'json' , data : JSON.stringfy({field : value})
+        dataType : 'json',
+        success :function(data){
+          console.log(data);
+          //두번째 : 객체가 가지고 있는 필드 == 해당 태그의 name 속성의 값
+          // 객체의 해당하는 필드 값 1.object[field] 2.object.field
+          // -> 2번째의 경우 실제 필드이름을 사용할 때만
+          for(field in data){
+            $('#info input[name="'+field+'"]').val(data[field])
+          }
+          // $('#employee_id').val(data.employee_id)
+          // $('#last_name').val(data.last_name)
+          // $('#first_name').val(data.first_name)
+          // $('#email').val(data.email)
+          // $('#job_id').val(data.job_id)
+          // $('#phone_number').val(data.phone_number)
+        },
+        error : function(reject){
+          alert('번호없음')
+          console.log(10)
+        }
+      })
+    });
+
+    // 수정
+    // 주소 : http://192.168.0.83:8088/myserver/empUpdate
+    // 통신 : post
+    // content-type : application/x-www-form-urlencoded
+    $('#updateBtn').click(function(){
+      $.ajax({
+      url : 'http://192.168.0.83:8088/myserver/empUpdate',
+      type : 'post',
+      data : $('#info').serialize(),
+      dataType : 'json',
+      success : function(data){
+        alert('수정완료')
+        if(data != null){
+          console.log('수정완료')
+        }
+      },
+      error : function(reject){
+        console.log('수정실패');
+      },
+      })
+    })
+
+    // 삭제
+    // 주소 : http://192.168.0.83:8088/myserver/empDelete
+    // 통신 : post
+    // content - type : application/x-www-form-urlencoded
+    // 데이터 : 사원번호 
+     $('#deleteBtn').click(function(){
+      $.ajax({
+        url : 'http://192.168.0.83:8088/myserver/empDelete',
+        type : 'post',
+        data :{ employee_id : $('#empId').val()},
+        dataType : 'json',
+        success :function(data){
+          alert('삭제완료')
+        if(data != null){
+          console.log('삭제완료')
+        }
+        },
+        error: function(reject){
+          console.log('삭제실패')
+        }
+      })
+     })
+
+  </script>
+
+</body>
+
+</html>

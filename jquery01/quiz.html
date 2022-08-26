@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<p>버블링 이벤트<button>버튼</button></p>
+<body>
+  <script>
+    // //8.
+    // document.getElementById('userid').value = "홍길동";
+    // //9.
+    // document.getElementById('img').alt = "강아지";
+    // //10.
+    // document.querySelector('.item').textContent = 50;
+    // document.querySelectorAll('.item')[0].textContent = 50;
+    //11.
+    let tag = document.querySelector('p');
+    tag.addEventListener('click',function(event){
+      if(event.target.tagName =='BUTTON'){
+        console.log(event.target)
+        console.log(this);
+      }
+    })
+  </script>
+</body>
+
+</html>

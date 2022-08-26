@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <p onclick="alert('버튼1')">
+    <a href="https://www.naver.com" class="btn1">버튼1</a>
+  </p>
+  <p class="txt1">내용1</p>
+  <p onclick="alert('버튼2')">
+    <a href="https://www.google.com" class="btn2">버튼2</a>
+  </p>
+  <p class="txt2">내용2</p>
+  <p>
+    <button class="btn3">버튼3</button>
+  </p>
+  <p class="txt3">내용3</p>
+  <script>
+    /*
+      - 이벤트 핸들러 등록
+      1. $('').on('event',function(event){ });
+      2. $('').click(function(event){});
+
+      - 이벤트 핸들러 제거
+      1. $('').off('eventName'); // 해당 태그에서 지정된 이벤트관련 핸들러 제거
+      2. $('').off('eventName', '선택자', 이벤트핸들러명);
+
+      - 등록된 이벤트를 강제로 발생
+      1. $('').trigger('eventName');
+      2. $('').click();
+
+    */
+   //click 이벤트
+   $('.btn1').click(function(event){
+    event.preventDefault(); // 해당 태그의 default 로 등록되어있는 핸들러를 막음
+    $('.txt1').css('background-color','green');
+   });
+
+   $('.btn2').on('click',function(){
+   // $('.txt2').css({'border' : '1px solid blakc', 'background-color': 'pink'});
+    return false; // 현재 핸들러만 작동하도록
+   });
+
+   // click 이벤트 핸들러를 제거
+  // $('.btn2').off('click');
+
+  // 기존의 태그에 등록된 이벤트 핸들러를 제거
+  // 개발자가 임의로 등록한 경우 -> off()
+  // default인 경우 -> 이벤트 핸들러를 등록 ( 단 event 객체의 preventDefault() / return false)
+
+  // 이벤트를 강제로 발생
+  $('.btn1').trigger('click');
+  $('.btn1').click();
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <h2>$(this)</h2>
+  <ul class="menuWrap_1">
+    <li><a href="#">메뉴1</a></li>
+    <li><a href="#">메뉴2</a></li>
+    <li><a href="#">메뉴3</a></li>
+  </ul>
+  <h2>index()</h2>
+  <ul class="menuWrap_2">
+    <li><a href="#">메뉴4</a></li>
+    <li><a href="#">메뉴5</a></li>
+    <li><a href="#">메뉴6</a></li>
+  </ul>
+  <p class="idxNum"></p>
+  <script>
+       /* 
+        - 자바스크립트 this 객체
+        1. 단독으로 사용할 경우 window 객체
+        2. 함수 안에서 사용할 경우 window 객체
+        3. 메서드 안에서 사용할 경우 해당 메서드를 호출한 객체
+        4. 이벤트 핸들러 안에서 사용할 경우 이벤트를 받는 태그
+
+      */
+    this // window 객체
+    function fun() {
+      this // window 객체
+    }
+
+    let object = {
+      filed: function () {
+        this // object 객체
+      }
+    }
+    $('').on('click', function () {
+      this // 실제로 이벤트가 실행되는 태그
+    })
+
+// ==========================================================
+    $('.menuWrap_1 a').on('click', function (e) {
+      e.preventDefault();
+      $('.menuWrap_1 a').css('background-color', 'blue');
+      $(this).css('background-color','pink')
+    })
+
+    $('.menuWrap_2 a').on('click', function (e) {
+      e.preventDefault();
+      $('.menuWrap_2 a').css('background-color', 'green');
+      $(this).css('background-color','pink')
+      $('.idxNum').text($(this).text());
+
+      // this - > event 객체의 currentTarget (단 , 이벤트 핸들러 안에서만)
+
+      // index() - > 배열 안의 원하는 값이 몇번째 인데스 인지 반환
+      let index = $('.menuWrap_2 a').index(this)
+     
+      $('.menuWrap_2 a').eq(index).css('border','2px solid blue');
+      $('.idxNum').text(index);
+    })
+
+    // $('.menuWrap_1 a').on('click',function(e){
+    //   e.preventDefault();
+    //   //클래스 값이 menuWrap_1인 태그의 하위요소 중 모든 a 태그에 배경색을 파랑색으로 변경
+    //   $('.menuWrap_1 a').css('background-color','blue')
+    //   $(this).css('background-color','pink')
+    // })
+    // $('.menuWrap_2 a').on('click',function(e){
+    //   e.preventDefault();
+    //   $('.menuWrap_2 a').css('background-color','gray')
+    //   $(e.target).css('background-color','pink')
+    //   $('.idxNum').text($(e.target).text())
+    // })
+    //3.클래스 값이 menuWrap_2인 태그의 하위요소 중 모든 a태그에 배경색을 녹색으로 변경
+    //4.실제로 click 이벤트가 발생한 태그에 한해서 배경색을 회색으로 변경
+    //5. 실제로 click 이벤트가 발생한 태그의 텍스트 값을 p태그에 렌더링
+  </script>
+</body>
+
+</html>

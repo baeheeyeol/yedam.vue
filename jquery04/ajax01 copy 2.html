@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <script>
+    $(document).ready(function () {
+        /*
+          $.ajax({
+            // 접속할 주소
+            url : ,
+            // 데이터를 전송하는 방식(get, post) , default : get
+            type : ,
+            // 전송할 데이터
+            data : ,
+            // 전송할 데이터의 content-type : application/x-www-form-urlencoded
+            contentType : ,
+            // 리턴되는 데이터의 타입
+            dataType : ,
+            // 전송에 성공했을 경우
+            susccess : function(data){},
+            // 전송에 실패했을 경우
+            error : function(reject){},
+            //async : 동기식과 비동기식을 제어 / default : true -> false (동기식으로 동작)
+            //beforeSend : 전송 전 이루어져야하는 작업(function) 등록
+          }); 
+        */
+        $.ajax({
+          url: "http://192.168.0.83:8088/myserver/empSelect",
+          dataType: "json",
+          success: function (data) {
+            let table = $('<table />');
+            let trTag = $('<tr />');
+            let header = data[0];
+            for (let field in header) {
+              let thTag = $('<th/>').text(field);
+              trTag.append(thTag);
+            }
+            table.append(trTag);
+            $(data).each(function (idx, obj) {
+              trTag = $('<tr/>');
+              for (let field in header) {
+                let tdTag = $('<td/>').text(obj[field]);
+                trTag.append(tdTag);
+              }
+              table.append(trTag);
+            })
+            $('#content').append(table);
+          },
+          error : function(recject){
+            console.log('테이블 생성 실패')
+          }
+        })
+      }
+    )
+  </script>
+  <div id="content"></div>
+</body>
+
+</html>
