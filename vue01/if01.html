@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <!-- v-if 디렉티브 : 값이 true일 경우 해당 태그를 생성 -->
+  <div id="app">
+    <label>
+      <input type="checkbox" v-model="myVisible">표시
+      <p v-if="myVisible" id="test">체크박스가 On</p>
+      <p v-else id="test">체크박스가 OFF</p>
+    </label>
+      <hr>
+      <hr>
+      <p v-if="type == 'A'">A</p>
+      <p v-else-if="type == 'B'">B</p>
+      <p v-else-if="type == 'C'">C</p>
+      <p v-else>기타: {{type}}</p>
+      <input v-model="type">
+    <br>
+    <button v-show="isShow" @click="isShow =false">선택</button>
+  </div>
+  <script>
+    // v-if 디렉티브 : 태그의생성 자체에 관여
+    // v-show 디렉티브 : 태그의 style 속성의 값을 display : none; 으로 변경
+    let app = new Vue({
+      el: '#app',
+      data: {
+        myVisible: true,
+        type:'',
+        isShow:true,
+      },
+     
+    })
+  </script>
+</body>
+
+</html>

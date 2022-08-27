@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <script>
+    // 컴포넌트
+    const component = {
+      /*
+      template
+        1. html 태그로 내용을 구성
+        2. 인접(형제) 태그가 아닌 부모-자식관계로 구성
+      */
+      template: `<div> hello, vue.js
+                  <br>
+                  <p>{{text}}</p>
+                  <input v-model="text">
+                  </div>`,
+      // data : 함수로 정의하면서 반환 값을 반드시 객체(필드 - > 프로퍼티)로 구성
+      data: function () {
+        return {
+          messag: '컴포넌트 메세지'
+        }
+      },
+      /* props : 외부에서 전달받은 값을 저장하는 프로퍼티
+          1. 표기방법 : 배열 -> 간단하게 프로퍼티 이름을 나열
+          2. 표기방법 : 객체 -> 각 프로퍼티의 옵션을 정의
+      */
+      props: {
+        text: {
+          type: [String, Number],
+          required: true,
+          default: '기본 값입니다.'
+          // type이 객체나 배열같은 참조타입일 경우 반드시 function(){ return object or array}
+        }
+      },
+      computed: {},
+      methods: {},
+      watch: {},
+    };
+  </script>
+
+  <div id="app"></div>
+  <script>
+    let app = new Vue({
+      el: '#app',
+      template: `<div>
+                    <input v-model="data">
+                    <instance-component v-bind:text="data">
+                    </instance-component>
+                    </div>`,
+      components: {
+        'instance-component': component
+      },
+      data: {
+        data: '테스트입니다.'
+      }
+    })
+  </script>
+
+  <!-- =================================================================== -->
+
+  <script>
+    //$on -> 컴포넌트 간에 이벤트를 수신하는 경우
+    //$emit -> event를 통해 컴포넌트가 상위 컴포넌트에 메세지를 보내는 경우
+
+    const childComponent = {
+      template: `<div>
+                    <button v-on:click="childIncrementCount()">자식으로 부터 증가</button>
+                  </div>`,
+      methods: {
+        childIncrementCount: function () {
+          this.$emit('increment-me');
+        }
+      }
+    }
+    const btnComponent = {
+      template: `<div>
+                    <input v-model="counter">
+                    <button v-on:click="counting">{{counter}}</button>
+                  </div>`,
+      data: function () {
+        return {
+          counter: 100
+        }
+      },
+      methods: {
+        counting: function () {
+          this.counter += 1;
+        }
+      },
+      watch: {
+        counter: function () {
+          this.$emit('count-up');
+        }
+      }
+    }
+  </script>
+
+  <div id="app1">
+    <p>{{counter}}</p>
+    <button v-on:click="incrementCounter">카운터중가</button>
+    <!-- $emit : 커스텀 이벤트를 상위 컴포넌트에 전달
+          하위 컴포넌트를 호출할 때 커스텀 이벤트에 대한 핸들러를 등록
+        단, 이 이벤트 핸들러는 상위 컴포넌트에 정의되어 있음
+      -->
+    <btn-component v-on:increment-me="incrementCounter"></btn-component>
+    <count-component v-on:count-up="incrementCounter"></count-component>
+  </div>
+  <script>
+    let app1 = new Vue({
+      el: '#app1',
+      data: {
+        counter: 0
+      },
+      methods: {
+        incrementCounter: function () {
+          this.counter++;
+        }
+      },
+      components : {
+        btnComponent : childComponent,
+        countComponent: btnComponent,
+      }
+    })
+  </script>
+</body>
+
+</html>

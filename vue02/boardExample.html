@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>간단한 게시판</h2>
+  <div id="app">
+    <p>게시판 데이터 json 파일 읽기</p>
+    <input type="file" v-on:change="loadData($event)">
+    <button @:click="">게시판 저장하기</button>
+    <!-- 게시판 전체 목록 조회 -->
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded',function(){
+      let app =new Vue({
+        el : '#app',
+        data : {
+          dataArray : []
+        },
+        components : {},
+        methods : {
+          loadData : function(event){
+            let file =event.target.files[0].name; // 등록된 파일명
+            if(file){
+              let vueObj = this; 
+            $.ajax({
+              url:file,
+              dataType:'json',
+              success :function(data){
+                vueObj.dataArray = data.board
+                console.log(this.dataArray)
+              },
+              error :function(reject){
+                console.log(reject);
+              }
+            })
+          }}
+        },
+      })
+    })
+  </script>
+</body>
+</html>

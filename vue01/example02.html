@@ -33,7 +33,8 @@
           inputText: '',
           forhiddenText: '',
           timerObj: null,
-          word : '',
+          word: '',
+          forhiddenCnt: 0 // 실제로 사용자가 입력한 금지문자 횟수
         },
         methods: {
           start: function () {
@@ -45,16 +46,48 @@
             }, 1000);
           },
         },
-        computed:{
-          wordCnt : function(){
-            return this.wordCnt =this.inputText.length
-          }
-        },
+        // computed: {
+        //   resultScore : function () {
+        //     return this.forhiddenCnt *12;
+        //   }
+        // },
+        // watch: {
+        //   limitTime: function () {
+        //     // why? 제한시간이 0에 도달할 경우 처리해야하는 작업이 존재
+        //     if (this.limitTime <= 0) {
+        //       //사용자에게 제한시간에 도달한 걸 알리고
+        //       alert('지정시간에 도달했습니다.');
+        //       //시간이 더이상 흐르지 않도록 interval clear
+        //       clearInterval(this.timerObj);
+        //       //textarea 비활성화
+        //       this.isWritable = true;
+        //       //최종적으로 입력된 문자의 갯수를 산출
+        //       this.wordCnt = this.inputText.length;
+        //     }
+        //   },
+        //   inputText: function () {
+        //     // why? 입력된 문자들 중에 금지문자가 있는 지를 확인
+        //     let dataList = this.forhiddenText.split(',');
+
+        //     for (let i = 0; i < dataList.length; i++) {
+        //       // 금지문자의 포함여부를 indexOf()로 확인
+        //       let pos =this.inputText.indexOf(dataList[i]);
+        //       // 반환 값이 -1보다 크면
+        //       if(pos>-1)
+        //       // substr() : 처음부터 금지문자 바로 전까지 잘라서 반환
+        //         alert(this.forhidenText + '는 입력할 수 없습니다.');
+        //         this.inputText = this.inputText.substr(0,pos);
+        //       // 제한시간 + 10
+        //       this.limitTime +=10;
+        //       //금지문자를 입력한 값
+        //       this.forhiddenCnt++;
+        //     }
+        //   },
+        // }
         watch: {
           inputText: function () {
             this.wordCnt = this.inputText.length
             word=this.forhiddenText.split(',');
-            console.log(word)
             for(let key of word){
             let pos = this.inputText.indexOf(key);
             if (pos >= 0) {
@@ -72,7 +105,6 @@
             }
           }
         }
-
       })
     })
   </script>
