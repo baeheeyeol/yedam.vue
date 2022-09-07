@@ -33,6 +33,7 @@ export default new VueRouter({
       path : '/boardWrite',
       name : 'boardWrite',
       component : myBoardWrite,
+      pros:true
     },
     {
       path  : '*',
