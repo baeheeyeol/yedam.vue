@@ -2,22 +2,79 @@
 <html lang="en">
 
 <head>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js"></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script type="text/javascript">
+    new QRCode(document.getElementById("qrcode"), "http://jindo.dev.naver.com/collie");
+    </script>
   <title>Document</title>
+  <style>
+    #qrcode {
+      width: 160px;
+      height: 160px;
+      margin-top: 15px;
+    }
+  </style>
 </head>
 
 <body>
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <template v-for="page in pagingInfo.totalPage">
-      <li class="page-item">
-        <a class="page-link" href="#" @click.prevent ="currentPage==page">{{page}}</a>
-      </li>
-    </template>
-    </ul>
-  </nav>
+  <input id="text" type="text" value="https://hogangnono.com" style="width:80%" /><br />
+  <div id="qrcode"></div>
+  <button onclick="requestPay()">결제하기</button>
+  ------------------------------------------------
+  <script>
+    function requestPay() {
+      var IMP = window.IMP;
+      IMP.init('imp30171015');
+      IMP.request_pay({
+        pg: "kakaopay",
+        pay_method: "card",
+        merchant_uid: 'merchant_' + new Date().getTime(),
+        name: '결제테스트',
+        amount: 5000000,
+        buyer_email: 'iamport@siot.do',
+        buyer_name: '구매자',
+        buyer_tel: '010-1234-5678',
+        buyer_addr: '서울특별시 강남구 삼성동',
+        buyer_postcode: '123-456'
+      }, function (rsp) { // callback
+        if (rsp.success) {
+          // 결제 성공 시 로직,
+        } else {
+          // 결제 실패 시 로직,
+        }
+      });
+    }
+
+    var qrcode = new QRCode("qrcode");
+
+    function makeCode() {
+      var elText = document.getElementById("text");
+
+      if (!elText.value) {
+        alert("Input a text");
+        elText.focus();
+        return;
+      }
+
+      qrcode.makeCode(elText.value);
+    }
+
+    makeCode();
+
+    $("#text").
+    on("blur", function () {
+      makeCode();
+    }).
+    on("keydown", function (e) {
+      if (e.keyCode == 13) {
+        makeCode();
+      }
+    });
+  </script>
 </body>
 
 </html>

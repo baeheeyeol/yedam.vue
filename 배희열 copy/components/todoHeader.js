@@ -22,6 +22,7 @@ export default{
           if(data !=null){
             console.log(1)
             alert('TodoList add!!');
+            //() 안에 위치로 데이터를 가지고 이동 (뒤로가기 앞으로가기)
             component.$router.go(0);
           }
         },
